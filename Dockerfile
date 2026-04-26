@@ -1,8 +1,8 @@
 # Build stage
-FROM python:3.14-alpine AS builder
+FROM python:3.14-alpine@sha256:dd4d2bd5b53d9b25a51da13addf2be586beebd5387e289e798e4083d94ca837a AS builder
 
 # Install build dependencies
-RUN apk add --no-cache \
+RUN apk update && apk add --no-cache \
     build-base \
     git \
     libffi-dev \
@@ -11,8 +11,8 @@ RUN apk add --no-cache \
     cargo \
     curl
 
-# Install uv
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+# Install uv (pinned version for reproducibility)
+RUN curl -LsSf https://astral.sh/uv/0.11.7/install.sh | sh
 ENV PATH="/root/.local/bin:${PATH}"
 
 # Set working directory
@@ -34,10 +34,10 @@ COPY nvidia_nim_models.json ./
 RUN uv sync --frozen --no-dev
 
 # Runtime stage
-FROM python:3.14-alpine
+FROM python:3.14-alpine@sha256:dd4d2bd5b53d9b25a51da13addf2be586beebd5387e289e798e4083d94ca837a
 
 # Install runtime dependencies
-RUN apk add --no-cache \
+RUN apk update && apk add --no-cache \
     libffi \
     openssl
 
