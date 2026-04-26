@@ -1,0 +1,10 @@
+services:
+  free-claude-code:
+    build: .
+    ports:
+      - "8082:8082"
+    env_file:
+      - .env
+    volumes:
+      - ./agent_workspace:/app/agent_workspace
+    restart: unless-stopped
