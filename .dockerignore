@@ -1,8 +1,17 @@
 .git
 .gitignore
 .github
+.venv
 tests
 .env
 agent_workspace
 docs
 claude-pick
+README.md
+AGENTS.md
+CLAUDE.md
+docker-compose.yml
+LICENSE
+pic.png
+PLAN.md
+smoke
